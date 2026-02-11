@@ -1,0 +1,6 @@
+@nedo.asp.boilerplate_HostAddress = http://localhost:5278
+
+GET {{nedo.asp.boilerplate_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
