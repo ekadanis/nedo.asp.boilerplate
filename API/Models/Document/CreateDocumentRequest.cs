@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Nedo.Asp.Boilerplate.API.Models.Document;
 
-/// <summary>
-/// Request model for creating a new document
-/// </summary>
 public class CreateDocumentRequest
 {
     [Required(ErrorMessage = "Document title is required")]

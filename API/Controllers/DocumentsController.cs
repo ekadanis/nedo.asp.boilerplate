@@ -21,9 +21,6 @@ public class DocumentsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Get all documents
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<List<DocumentListDto>>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
@@ -32,9 +29,6 @@ public class DocumentsController : ControllerBase
         return Ok(ApiResponse<List<DocumentListDto>>.SuccessResponse(documents, "Documents retrieved successfully"));
     }
 
-    /// <summary>
-    /// Get document by ID
-    /// </summary>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponse<DocumentDto>), 200)]
     [ProducesResponseType(typeof(ApiResponse<object>), 404)]
@@ -48,9 +42,6 @@ public class DocumentsController : ControllerBase
         return Ok(ApiResponse<DocumentDto>.SuccessResponse(document, "Document retrieved successfully"));
     }
 
-    /// <summary>
-    /// Get documents by project ID
-    /// </summary>
     [HttpGet("project/{projectId}")]
     [ProducesResponseType(typeof(ApiResponse<List<DocumentListDto>>), 200)]
     public async Task<IActionResult> GetByProjectId(Guid projectId, CancellationToken cancellationToken)
@@ -59,9 +50,6 @@ public class DocumentsController : ControllerBase
         return Ok(ApiResponse<List<DocumentListDto>>.SuccessResponse(documents, "Documents retrieved successfully"));
     }
 
-    /// <summary>
-    /// Create a new document
-    /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponse<Guid>), 201)]
     [ProducesResponseType(typeof(ApiResponse<object>), 400)]
@@ -78,9 +66,7 @@ public class DocumentsController : ControllerBase
             ApiResponse<Guid>.SuccessResponse(documentId, "Document created successfully"));
     }
 
-    /// <summary>
-    /// Update an existing document
-    /// </summary>
+
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(ApiResponse<object>), 200)]
     [ProducesResponseType(typeof(ApiResponse<object>), 400)]
@@ -97,9 +83,6 @@ public class DocumentsController : ControllerBase
         return Ok(ApiResponse<object>.SuccessResponse(null, "Document updated successfully"));
     }
 
-    /// <summary>
-    /// Delete a document (soft delete)
-    /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse<object>), 200)]
     [ProducesResponseType(typeof(ApiResponse<object>), 404)]

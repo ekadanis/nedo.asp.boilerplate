@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Nedo.Asp.Boilerplate.API.Models.Document;
 
-/// <summary>
-/// Request model for updating an existing document
-/// </summary>
 public class UpdateDocumentRequest
 {
     [Required(ErrorMessage = "Document title is required")]

@@ -1,8 +1,5 @@
 namespace Nedo.Asp.Boilerplate.API.Models.Common;
 
-/// <summary>
-/// Standard API response wrapper for consistent responses
-/// </summary>
 public class ApiResponse<T>
 {
     public bool Success { get; set; }

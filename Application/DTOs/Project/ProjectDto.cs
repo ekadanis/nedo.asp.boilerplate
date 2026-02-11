@@ -1,8 +1,5 @@
 namespace Nedo.Asp.Boilerplate.Application.DTOs.Project;
 
-/// <summary>
-/// Full project data transfer object for detailed views
-/// </summary>
 public class ProjectDto
 {
     public Guid Id { get; set; }

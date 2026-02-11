@@ -21,9 +21,6 @@ public class ProjectsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Get all projects
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<List<ProjectListDto>>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
@@ -32,9 +29,6 @@ public class ProjectsController : ControllerBase
         return Ok(ApiResponse<List<ProjectListDto>>.SuccessResponse(projects, "Projects retrieved successfully"));
     }
 
-    /// <summary>
-    /// Get project by ID
-    /// </summary>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponse<ProjectDto>), 200)]
     [ProducesResponseType(typeof(ApiResponse<object>), 404)]
@@ -48,9 +42,6 @@ public class ProjectsController : ControllerBase
         return Ok(ApiResponse<ProjectDto>.SuccessResponse(project, "Project retrieved successfully"));
     }
 
-    /// <summary>
-    /// Create a new project
-    /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponse<Guid>), 201)]
     [ProducesResponseType(typeof(ApiResponse<object>), 400)]
@@ -67,9 +58,6 @@ public class ProjectsController : ControllerBase
             ApiResponse<Guid>.SuccessResponse(projectId, "Project created successfully"));
     }
 
-    /// <summary>
-    /// Update an existing project
-    /// </summary>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(ApiResponse<object>), 200)]
     [ProducesResponseType(typeof(ApiResponse<object>), 400)]
@@ -86,9 +74,6 @@ public class ProjectsController : ControllerBase
         return Ok(ApiResponse<object>.SuccessResponse(null, "Project updated successfully"));
     }
 
-    /// <summary>
-    /// Delete a project (soft delete)
-    /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse<object>), 200)]
     [ProducesResponseType(typeof(ApiResponse<object>), 404)]

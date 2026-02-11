@@ -3,9 +3,6 @@ using System.Text.Json;
 
 namespace Nedo.Asp.Boilerplate.API.Middleware;
 
-/// <summary>
-/// Global exception handling middleware
-/// </summary>
 public class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;

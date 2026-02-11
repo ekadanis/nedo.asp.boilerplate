@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Nedo.Asp.Boilerplate.API.Models.Project;
 
-/// <summary>
-/// Request model for updating an existing project
-/// </summary>
 public class UpdateProjectRequest
 {
     [Required(ErrorMessage = "Project name is required")]

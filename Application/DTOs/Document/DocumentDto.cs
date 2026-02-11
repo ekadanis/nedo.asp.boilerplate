@@ -1,8 +1,5 @@
 namespace Nedo.Asp.Boilerplate.Application.DTOs.Document;
 
-/// <summary>
-/// Full document data transfer object for detailed views
-/// </summary>
 public class DocumentDto
 {
     public Guid Id { get; set; }
