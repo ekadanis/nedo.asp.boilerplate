@@ -1,40 +1,40 @@
+using Nedo.AspNet.ApiContracts.Extensions;
+using Nedo.AspNet.ApiContracts.Swagger;
+using Nedo.AspNet.Request.Enrichment.DependencyInjection;
+using Nedo.AspNet.Request.Enrichment.Middleware;
+using Nedo.AspNet.Request.InputValidation;
+using Nedo.AspNet.Request.Validation.Extensions;
 using Nedo.Asp.Boilerplate.API.Middleware;
-using Nedo.Asp.Boilerplate.Extensions;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Serilog
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.File("logs/boilerplate-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-
-builder.Host.UseSerilog();
-
-// Add services to the container
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-
-// Swagger configuration
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddApiContracts();
+builder.Services.AddRequestEnrichment(enrichment =>
 {
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "Nedo ASP.NET Boilerplate API",
-        Version = "v1",
-        Description = "Document Management System API"
-    });
+    enrichment.AddRequestId();
+    enrichment.AddCorrelationId();
+    enrichment.AddClientIp();
+    enrichment.AddRequestTime();
+    enrichment.AddUserInformation();
 });
 
-// Database and repositories
-builder.Services.AddDatabase(builder.Configuration);
-builder.Services.AddRepositories();
-builder.Services.AddApplicationServices();
+builder.Services.AddRequestInputValidation(
+    builder.Configuration.GetSection("NedoRequestInputValidation")
+);
 
-// CORS for development
+builder.Services.AddRequestValidation();
+builder.Services.AddControllers(options =>
+{
+    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.OperationFilter<StandardHeaderFilter>();
+    options.AddStandardAuthorization();
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -51,21 +51,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Boilerplate API v1");
-        options.RoutePrefix = string.Empty; // Serve Swagger at root
-    });
+    app.UseSwaggerUI();
 }
-
-// Global exception handling
-app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
-app.UseAuthorization();
 app.MapControllers();
-
-Log.Information("Starting Nedo ASP.NET Boilerplate API");
-
 app.Run();
